@@ -1,14 +1,15 @@
 import React, { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 import { useContactsCrud } from "../context/ContactsCrudContext";
 
 const EditContact = () => {
   const location = useLocation();
-  const [id, name, email] = location.state.contact;
+  const navigate = useNavigate();
+  const { id, name, email } = location.state.contact;
   const [newName, setNewName] = useState(name);
   const [newEmail, setNewEmail] = useState(email);
   const { updateContactHandler } = useContactsCrud();
-  const navigate = useNavigate();
+
   const update = (e) => {
     e.preventDefault();
     if (newName === "" || newEmail === "") {
@@ -45,6 +46,9 @@ const EditContact = () => {
             onChange={(e) => setNewEmail(e.target.value)}
           />
         </div>
+        <Link to={`/`}>
+          <button className="ui button blue left">Cancel</button>
+        </Link>
         <button className="ui button blue">Save</button>
       </form>
     </div>

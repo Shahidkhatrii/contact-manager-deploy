@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const AddContact = () => {
   const [name, setName] = useState("");
@@ -22,6 +22,7 @@ const AddContact = () => {
   return (
     <div className="ui main">
       <h2>Add Contact</h2>
+
       <form className="ui form" onSubmit={add}>
         <div className="field">
           <label>Name</label>
@@ -43,6 +44,9 @@ const AddContact = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
+        <Link to={`/`}>
+          <button className="ui button red left">Cancel</button>
+        </Link>
         <button className="ui button blue">Add</button>
       </form>
     </div>

@@ -1,13 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import user from "../images/user.jpg";
 import { Link } from "react-router-dom";
+
 import { useContactsCrud } from "../context/ContactsCrudContext";
 const ContactCard = (props) => {
   const { id, name, email } = props.contact;
-  const { removeContactHandler } = useContactsCrud();
-  const DeleteContact = (id) => {
-    removeContactHandler(id);
-  };
+  const { showModalHandler, setDeleteId } = useContactsCrud();
 
   return (
     <div className="item">
@@ -25,7 +23,10 @@ const ContactCard = (props) => {
           marginLeft: "10px",
           marginTop: "7px",
         }}
-        onClick={() => DeleteContact(id)}
+        onClick={() => {
+          showModalHandler();
+          setDeleteId(id);
+        }}
       ></i>
       <Link to={`/edit`} state={{ contact: props.contact }}>
         <i

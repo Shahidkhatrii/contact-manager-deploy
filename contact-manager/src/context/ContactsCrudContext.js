@@ -5,20 +5,21 @@ const ContactCrudContext = createContext();
 
 export function ContactCrudContextProvider({ children }) {
   const [contacts, setContacts] = useState([]);
-
+  const [deleteId, setDeleteId] = useState("");
+  const [showModal, setShowModal] = useState(false);
   //RetriveContacts
   const retriveContacts = async () => {
     const response = await api.get("/contacts");
     if (response.data) setContacts(response.data);
   };
-
-  //DeleteContact
-  const removeContactHandler = async (id) => {
-    await api.delete(`/contacts/${id}`);
+  //DeleteContact;
+  const removeContactHandler = async (deleteId) => {
+    await api.delete(`/contacts/${deleteId}`);
     const newContactList = contacts.filter((contact) => {
-      return contact.id !== id;
+      return contact.id !== deleteId;
     });
     setContacts(newContactList);
+    setShowModal(false);
   };
   //AddContacts
   const addContactHandler = async (contact) => {
@@ -31,7 +32,7 @@ export function ContactCrudContextProvider({ children }) {
   };
   //UpdateContact
   const updateContactHandler = async (contact) => {
-    const response = await api.put(`/contacts/${contact.id}`);
+    const response = await api.put(`/contacts/${contact.id}`, contact);
     const { id } = response.data;
     setContacts(
       contacts.map((contact) => {
@@ -39,13 +40,22 @@ export function ContactCrudContextProvider({ children }) {
       })
     );
   };
+  //modal
+  const showModalHandler = () => {
+    setShowModal(true);
+  };
 
   const value = {
     contacts,
     retriveContacts,
-    removeContactHandler,
     addContactHandler,
     updateContactHandler,
+    showModal,
+    showModalHandler,
+    setShowModal,
+    setDeleteId,
+    deleteId,
+    removeContactHandler,
   };
 
   return (
