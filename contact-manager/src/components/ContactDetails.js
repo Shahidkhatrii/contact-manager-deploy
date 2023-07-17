@@ -5,7 +5,7 @@ import { useLocation, Link } from "react-router-dom";
 const ContactDetails = (props) => {
   const location = useLocation();
 
-  const { name, email } = location.state.contact;
+  const { name, phone, email } = location.state.contact;
   return (
     <div className="main">
       <Link to={`/`}>
@@ -18,6 +18,7 @@ const ContactDetails = (props) => {
         </div>
         <div className="content">
           <div className="header">{name}</div>
+          <div className="description">{phone}</div>
           <div className="description">{email}</div>
         </div>
       </div>

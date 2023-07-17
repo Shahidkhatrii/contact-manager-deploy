@@ -1,10 +1,10 @@
-import React, { useState } from "react";
-import user from "../images/user.jpg";
+import React from "react";
+import user from "../images/user.png";
 import { Link } from "react-router-dom";
 
 import { useContactsCrud } from "../context/ContactsCrudContext";
 const ContactCard = (props) => {
-  const { id, name, email } = props.contact;
+  const { id, name, phone, email } = props.contact;
   const { showModalHandler, setDeleteId } = useContactsCrud();
 
   return (
@@ -13,6 +13,7 @@ const ContactCard = (props) => {
       <div className="content">
         <Link to={`/contact/${id}`} state={{ contact: props.contact }}>
           <div className="header">{name}</div>
+          <div>{phone}</div>
           <div>{email}</div>
         </Link>
       </div>

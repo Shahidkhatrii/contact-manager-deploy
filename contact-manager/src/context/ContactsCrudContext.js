@@ -7,6 +7,8 @@ export function ContactCrudContextProvider({ children }) {
   const [contacts, setContacts] = useState([]);
   const [deleteId, setDeleteId] = useState("");
   const [showModal, setShowModal] = useState(false);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   //RetriveContacts
   const retriveContacts = async () => {
     const response = await api.get("/contacts");
@@ -44,6 +46,21 @@ export function ContactCrudContextProvider({ children }) {
   const showModalHandler = () => {
     setShowModal(true);
   };
+  //Search functionality
+  const searchHandler = (searchTerm) => {
+    setSearchTerm(searchTerm);
+    if (searchTerm !== "") {
+      const newContactList = contacts.filter((contact) => {
+        return Object.values(contact)
+          .join(" ")
+          .toLowerCase()
+          .includes(searchTerm.toLowerCase());
+      });
+      setSearchResults(newContactList);
+    } else {
+      setSearchResults(contacts);
+    }
+  };
 
   const value = {
     contacts,
@@ -52,6 +69,9 @@ export function ContactCrudContextProvider({ children }) {
     updateContactHandler,
     showModal,
     showModalHandler,
+    searchTerm,
+    searchResults,
+    searchHandler,
     setShowModal,
     setDeleteId,
     deleteId,

@@ -1,44 +1,27 @@
-import React from "react";
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
+
 const Modal = () => {
+  const { removeContactHandler, deleteId, setShowModal } = useContactsCrud();
   useEffect(() => {
     document.body.style.overflowY = "hidden";
     return () => {
       document.body.style.overflowY = "scroll";
     };
   }, []);
-  const { removeContactHandler, deleteId, setShowModal } = useContactsCrud();
+  const closeModal = () => {
+    setShowModal(false);
+  };
+  const confirmDeletion = () => {
+    removeContactHandler(deleteId);
+  };
   return (
     <div
-      className="ui center-div container"
-      style={{
-        width: "100%",
-        height: "100%",
-        position: "fixed",
-        top: "0",
-        left: "0",
-        right: "0",
-        bottom: "0",
-        backgroundColor: "rgba(189,189,189,0.7)",
-        zIndex: "1",
-      }}
-      onClick={() => {
-        setShowModal(false);
-      }}
+      className="ui center-div container "
+      id="modal-overlay"
+      onClick={closeModal}
     >
-      <div
-        className="ui center-div main"
-        style={{
-          backgroundColor: "white",
-          padding: "4% 6%",
-          position: "absolute",
-          top: "40%",
-          left: "50%",
-          transform: "translate(-50%,-50%)",
-          borderRadius: "5px",
-        }}
-      >
+      <div className="ui center-div main" id="modal-main">
         <h2
           className="ui"
           style={{
@@ -47,21 +30,11 @@ const Modal = () => {
         >
           Are you sure ?
         </h2>
-        <button
-          className="ui button red"
-          onClick={() => {
-            removeContactHandler(deleteId);
-          }}
-        >
-          Yes
+        <button className="ui button red" onClick={confirmDeletion}>
+          Delete
         </button>
-        <button
-          className="ui button blue"
-          onClick={() => {
-            setShowModal(false);
-          }}
-        >
-          No
+        <button className="ui button blue" onClick={closeModal}>
+          Cancel
         </button>
       </div>
     </div>

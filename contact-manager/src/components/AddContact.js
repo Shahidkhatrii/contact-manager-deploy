@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const AddContact = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
   const { addContactHandler } = useContactsCrud();
   const navigate = useNavigate();
   const add = (e) => {
     e.preventDefault();
-    if (name === "" || email === "") {
+    if (name === "" || email === "" || phone === "") {
       alert("All the fields are mandatory!");
       return;
     }
-    addContactHandler({ name, email });
+    addContactHandler({ name, phone, email });
     setName("");
     setEmail("");
     navigate("/");
@@ -25,7 +26,7 @@ const AddContact = () => {
 
       <form className="ui form" onSubmit={add}>
         <div className="field">
-          <label>Name</label>
+          <label htmlFor="name">Name</label>
           <input
             type="text"
             name="name"
@@ -35,7 +36,17 @@ const AddContact = () => {
           />
         </div>
         <div className="field">
-          <label>Email</label>
+          <label htmlFor="phone">Phone Number</label>
+          <input
+            type="number"
+            name="number"
+            placeholder="phone Number"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+          />
+        </div>
+        <div className="field">
+          <label htmlFor="email">Email</label>
           <input
             type="text"
             name="email"
@@ -44,9 +55,14 @@ const AddContact = () => {
             onChange={(e) => setEmail(e.target.value)}
           />
         </div>
-        <Link to={`/`}>
-          <button className="ui button red left">Cancel</button>
-        </Link>
+        <div
+          className="ui button red left"
+          onClick={() => {
+            window.location.href = "/";
+          }}
+        >
+          Cancel
+        </div>
         <button className="ui button blue">Add</button>
       </form>
     </div>

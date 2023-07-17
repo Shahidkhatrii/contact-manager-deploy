@@ -5,19 +5,26 @@ import { useContactsCrud } from "../context/ContactsCrudContext";
 const EditContact = () => {
   const location = useLocation();
   const navigate = useNavigate();
-  const { id, name, email } = location.state.contact;
+  const { id, name, phone, email } = location.state.contact;
   const [newName, setNewName] = useState(name);
   const [newEmail, setNewEmail] = useState(email);
+  const [newPhone, setNewPhone] = useState(phone);
   const { updateContactHandler } = useContactsCrud();
 
   const update = (e) => {
     e.preventDefault();
-    if (newName === "" || newEmail === "") {
+    if (newName === "" || newEmail === "" || newPhone === "") {
       alert("All the fields are mandatory!");
       return;
     }
-    updateContactHandler({ id, name: newName, email: newEmail });
+    updateContactHandler({
+      id,
+      name: newName,
+      phone: newPhone,
+      email: newEmail,
+    });
     setNewName("");
+    setNewPhone("");
     setNewEmail("");
     navigate("/");
   };
@@ -34,6 +41,16 @@ const EditContact = () => {
             placeholder="name"
             value={newName}
             onChange={(e) => setNewName(e.target.value)}
+          />
+        </div>
+        <div className="field">
+          <label>Phone Number</label>
+          <input
+            type="number"
+            name="number"
+            placeholder="phone Number"
+            value={newPhone}
+            onChange={(e) => setNewPhone(e.target.value)}
           />
         </div>
         <div className="field">
