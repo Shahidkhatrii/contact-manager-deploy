@@ -50,10 +50,62 @@ input::-webkit-inner-spin-button {
 
 #modal-main {
   background-color: white;
-  padding: 4% 6%;
+  padding: 3rem 2rem;
   position: absolute;
   top: 40%;
   left: 50%;
   transform: translate(-50%, -50%);
   border-radius: 6px;
+}
+
+#btn-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#modal-main button {
+  font-size: 1.3rem;
+  position: relative;
+  width: 6rem;
+  height: 3rem;
+  padding: 0px 0px;
+}
+
+#modal-heading {
+  font-size: 2.1rem;
+}
+
+@media (max-width:750px) {
+  #modal-main {
+    padding: 2rem 1.1rem;
+  }
+
+  #modal-main button {
+    font-size: 1rem;
+    width: 4rem;
+    height: 2rem;
+  }
+
+  #modal-heading {
+    font-size: large;
+  }
+
+  #btn-wrapper {
+    gap: 0.4rem;
+  }
+}
+
+@media (max-width:355px) {
+  #modal-main button {
+    font-size: 0.8rem;
+    width: 3rem;
+    height: 1.5rem;
+
+  }
+
+  #modal-heading {
+    font-size: medium;
+  }
 }
