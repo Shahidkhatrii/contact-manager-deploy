@@ -22,20 +22,23 @@ const Modal = () => {
       onClick={closeModal}
     >
       <div className="ui center-div main" id="modal-main">
-        <h2
+        <h1
+          id="modal-heading"
           className="ui"
           style={{
-            marginBottom: "1.5rem",
+            marginBottom: "1rem",
           }}
         >
           Are you sure ?
-        </h2>
-        <button className="ui button red" onClick={confirmDeletion}>
-          Delete
-        </button>
-        <button className="ui button blue" onClick={closeModal}>
-          Cancel
-        </button>
+        </h1>
+        <div id="btn-wrapper">
+          <button className="ui button red" onClick={confirmDeletion}>
+            Delete
+          </button>
+          <button className="ui button blue" onClick={closeModal}>
+            Cancel
+          </button>
+        </div>
       </div>
     </div>
   );
