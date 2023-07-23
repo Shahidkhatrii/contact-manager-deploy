@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import ContactCard from "./ContactCard";
+
 import { Link } from "react-router-dom";
 import Modal from "./Modal";
 import { useContactsCrud } from "../context/ContactsCrudContext";
+import Loader from "./Loader";
 
 const ContactList = (props) => {
   const {
@@ -12,19 +14,26 @@ const ContactList = (props) => {
     searchTerm,
     searchResults,
     searchHandler,
+    loading,
   } = useContactsCrud();
   const onUserSearch = (e) => {
     searchHandler(e.target.value);
   };
-
   const renderContactList = (
     searchTerm.length < 1 ? contacts : searchResults
   ).map((contact) => {
-    return <ContactCard contact={contact} key={contact.id} />;
+    return <ContactCard contact={contact} key={contact._id} />;
   });
+
   useEffect(() => {
+    console.log("useEffect");
+
     retriveContacts();
-  });
+    // eslint-disable-next-line
+  }, []);
+  // useEffect(() => {
+  //   retriveContacts();
+  // });
 
   return (
     <div className="main">
@@ -52,10 +61,12 @@ const ContactList = (props) => {
           <i className="search icon"></i>
         </div>
       </div>
+
       <div className="ui celled list">
-        {renderContactList.length >= 1
-          ? renderContactList
-          : "NO CONTACTS AVAILABLE"}
+        {loading ? <Loader /> : renderContactList}
+        {loading === false &&
+          renderContactList.length === 0 &&
+          "NO CONTACTS AVAILABLE"}
       </div>
     </div>
   );
