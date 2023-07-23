@@ -9,10 +9,13 @@ export function ContactCrudContextProvider({ children }) {
   const [showModal, setShowModal] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [searchResults, setSearchResults] = useState([]);
+  const [loading, setLoading] = useState(false);
   //RetriveContacts
   const retriveContacts = async () => {
+    setLoading(true);
     const response = await api.get("/contacts");
     if (response.data) setContacts(response.data);
+    setLoading(false);
   };
   //DeleteContact;
   const removeContactHandler = async (deleteId) => {
@@ -76,6 +79,7 @@ export function ContactCrudContextProvider({ children }) {
     setDeleteId,
     deleteId,
     removeContactHandler,
+    loading,
   };
 
   return (
