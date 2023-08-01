@@ -12,6 +12,7 @@ import Signup from "./auth/Signup";
 import { Toaster } from "react-hot-toast";
 function App() {
   return (
+    <>
     <div className="ui container">
       <Router>
         <Header />
@@ -29,6 +30,8 @@ function App() {
         </ContactCrudContextProvider>
       </Router>
     </div>
+    </>
+    
   );
 }
 
