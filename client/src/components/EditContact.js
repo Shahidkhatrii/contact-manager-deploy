@@ -28,7 +28,6 @@ const EditContact = () => {
     setNewEmail("");
     navigate("/contactlist");
   };
-
   return (
     <div className="ui main">
       <h2>Add Contact</h2>

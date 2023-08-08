@@ -19,7 +19,7 @@ const Header = () => {
   };
   return (
     <div className="ui fixed menu">
-      <div className="ui  center" id="header-flex">
+      <div className="ui center" id="header-flex">
         <img src={logo} alt="logo" />
         <h1 className="center" id="header-h1">
           Contact Manager
@@ -49,7 +49,7 @@ const Header = () => {
               id="signupBtn"
               onClick={HandleRegister}
             >
-              Register
+              Sign up
             </button>
           )}
       </div>

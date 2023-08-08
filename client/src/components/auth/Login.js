@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Message } from "semantic-ui-react";
 import Layout from "./Layout";
 import { toast } from "react-hot-toast";
 import { useContactsCrud } from "../../context/ContactsCrudContext";
 const Login = () => {
+  const navigate = useNavigate();
   const { loginUserHandler } = useContactsCrud();
 
   const [email, setEmail] = useState();
@@ -19,6 +20,11 @@ const Login = () => {
     setEmail("");
     setPassword("");
   };
+
+  useEffect(() => {
+    localStorage.getItem("token") && navigate("/contactlist");
+    // eslint-disable-next-line
+  }, []);
   return (
     <Layout header="Hello Again!">
       <form onSubmit={submit}>

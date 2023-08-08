@@ -1,11 +1,13 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Button, Form, Message } from "semantic-ui-react";
 import Layout from "./Layout";
 import { useContactsCrud } from "../../context/ContactsCrudContext";
 import { toast } from "react-hot-toast";
 
 const Signup = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -23,6 +25,11 @@ const Signup = () => {
     setEmail("");
     setPassword("");
   };
+
+  useEffect(() => {
+    localStorage.getItem("token") && navigate("/contactlist");
+    // eslint-disable-next-line
+  }, []);
   return (
     <Layout header="Sign up to get started">
       <form onSubmit={submit}>
