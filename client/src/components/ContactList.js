@@ -4,7 +4,8 @@ import ContactCard from "./ContactCard";
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useContactsCrud } from "../context/ContactsCrudContext";
-import Loader from "./Loader";
+
+import ContactListSkeleton from "./ContactListSkeleton";
 
 const ContactList = (props) => {
   const navigate = useNavigate();
@@ -66,7 +67,15 @@ const ContactList = (props) => {
       </div>
 
       <div className="ui celled list">
-        {loading ? <Loader /> : renderContactList}
+        {loading ? (
+          <ContactListSkeleton
+            amount={renderContactList.length || 1}
+            height={100}
+            styleHeight={5}
+          />
+        ) : (
+          renderContactList
+        )}
         {loading === false &&
           renderContactList.length === 0 &&
           "NO CONTACTS AVAILABLE"}

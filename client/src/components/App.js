@@ -1,34 +1,84 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
+import { Skeleton } from "@mui/material";
 import "./App.css";
-import Header from "./Header";
-import ContactList from "./ContactList";
-import AddContact from "./AddContact";
-import EditContact from "./EditContact";
-import ContactDetails from "./ContactDetails";
 import ProtectedRoute from "./utils/ProtectedRoutes";
 import { ContactCrudContextProvider } from "../context/ContactsCrudContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Login from "./auth/Login";
-import Signup from "./auth/Signup";
 import { Toaster } from "react-hot-toast";
+import ContactListSkeleton from "./ContactListSkeleton";
+import CardSkeleton from "./CardSkeleton";
+import DetailCardSkeleton from "./DetailCardSkeleton";
+const Header = lazy(() => import("./Header"));
+const ContactDetails = lazy(() => import("./ContactDetails"));
+const EditContact = lazy(() => import("./EditContact"));
+const AddContact = lazy(() => import("./AddContact"));
+const Signup = lazy(() => import("./auth/Signup"));
+const ContactList = lazy(() => import("./ContactList"));
+const Login = lazy(() => import("./auth/Login"));
+
 function App() {
   return (
     <>
-      <div className="ui container">
-        <Router>
+      <Router>
+        <Suspense
+          fallback={
+            <Skeleton
+              variant="rectangular"
+              sx={{ bgcolor: "grey.200" }}
+              animation="wave"
+              height={60}
+            />
+          }
+        >
           <Header />
-          <Toaster position="bottom-center" toastOptions={{ duration: 2000 }} />
+        </Suspense>
+
+        <Toaster position="bottom-center" toastOptions={{ duration: 2000 }} />
+        <div className="ui container">
           <ContactCrudContextProvider>
             <Routes>
-              <Route path="/signup" element={<Signup />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/" element={<Login />} />
+              <Route
+                path="/signup"
+                element={
+                  <Suspense fallback={<CardSkeleton />}>
+                    <Signup />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/login"
+                element={
+                  <Suspense fallback={<CardSkeleton />}>
+                    <Login />
+                  </Suspense>
+                }
+              />
+              <Route
+                path="/"
+                element={
+                  <Suspense fallback={<CardSkeleton />}>
+                    <Login />
+                  </Suspense>
+                }
+              />
               <Route
                 path="/Add"
                 exact
                 element={
                   <ProtectedRoute>
-                    <AddContact />
+                    <Suspense
+                      fallback={
+                        <div style={{ paddingTop: "3.5rem" }}>
+                          <ContactListSkeleton
+                            amount={3}
+                            height={80}
+                            styleHeight={5}
+                          />
+                        </div>
+                      }
+                    >
+                      <AddContact />
+                    </Suspense>
                   </ProtectedRoute>
                 }
               />
@@ -36,7 +86,24 @@ function App() {
                 path="/contactlist"
                 element={
                   <ProtectedRoute>
-                    <ContactList />
+                    <Suspense
+                      fallback={
+                        <>
+                          <Skeleton
+                            height={120}
+                            animation="wave"
+                            sx={{ bgcolor: "grey.200" }}
+                          />
+                          <ContactListSkeleton
+                            amount={8}
+                            height={100}
+                            styleHeight={5}
+                          />
+                        </>
+                      }
+                    >
+                      <ContactList />
+                    </Suspense>
                   </ProtectedRoute>
                 }
               />
@@ -45,7 +112,19 @@ function App() {
                 exact
                 element={
                   <ProtectedRoute>
-                    <EditContact />
+                    <Suspense
+                      fallback={
+                        <div style={{ paddingTop: "3.5rem" }}>
+                          <ContactListSkeleton
+                            amount={3}
+                            height={80}
+                            styleHeight={5}
+                          />
+                        </div>
+                      }
+                    >
+                      <EditContact />
+                    </Suspense>
                   </ProtectedRoute>
                 }
               />
@@ -54,14 +133,16 @@ function App() {
                 exact
                 element={
                   <ProtectedRoute>
-                    <ContactDetails />
+                    <Suspense fallback={<DetailCardSkeleton />}>
+                      <ContactDetails />
+                    </Suspense>
                   </ProtectedRoute>
                 }
               />
             </Routes>
           </ContactCrudContextProvider>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </>
   );
 }
