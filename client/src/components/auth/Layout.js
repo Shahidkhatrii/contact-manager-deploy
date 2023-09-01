@@ -1,11 +1,16 @@
 import React from "react";
 import { Form, Header } from "semantic-ui-react";
 import "./auth.css";
+import "../App.css";
 import logo from "../../images/logo.png";
 
 const Layout = (props) => {
   return (
     <div>
+      <p className="note-for-users">
+        Initial login or other activity may have a brief delay due to server
+        activation after 15 minutes of inactivity.
+      </p>
       <div className="auth-main">
         <div className="auth-content">
           <div className="auth-card">

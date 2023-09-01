@@ -27,7 +27,7 @@ const Login = () => {
     // eslint-disable-next-line
   }, []);
   return (
-    <Layout header="Hello Again!">
+    <Layout header="Enter Your Contact Hub!">
       <form onSubmit={submit}>
         <Form.Input
           fluid

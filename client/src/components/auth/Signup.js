@@ -31,7 +31,7 @@ const Signup = () => {
     // eslint-disable-next-line
   }, []);
   return (
-    <Layout header="Sign up to get started">
+    <Layout header="Create Your Contact Hub!">
       <form onSubmit={submit}>
         <Form.Input
           fluid
