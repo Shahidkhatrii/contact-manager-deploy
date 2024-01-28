@@ -60,6 +60,7 @@ export function ContactCrudContextProvider({ children }) {
     }
     setLoading(false);
   };
+
   //DeleteContact;
   const removeContactHandler = async (deleteId) => {
     const headers = {
@@ -72,6 +73,7 @@ export function ContactCrudContextProvider({ children }) {
     setContacts(newContactList);
     setShowModal(false);
   };
+
   //AddContacts
   const addContactHandler = async (contact) => {
     const headers = {
@@ -82,6 +84,7 @@ export function ContactCrudContextProvider({ children }) {
     setContacts([...contacts, response.data]);
     navigate("/contactlist");
   };
+
   //UpdateContact
   const updateContactHandler = async (contact) => {
     const headers = {
@@ -97,10 +100,12 @@ export function ContactCrudContextProvider({ children }) {
       })
     );
   };
+
   //modal
   const showModalHandler = () => {
     setShowModal(true);
   };
+
   //Search functionality
   const searchHandler = (searchTerm) => {
     setSearchTerm(searchTerm);

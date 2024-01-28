@@ -6,26 +6,34 @@ const EditContact = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { _id, name, phone, email } = location.state.contact;
-  const [newName, setNewName] = useState(name);
-  const [newEmail, setNewEmail] = useState(email);
-  const [newPhone, setNewPhone] = useState(phone);
+  const [contactForm, setContactForm] = useState({
+    newName: name,
+    newEmail: email,
+    newPhone: phone,
+  });
   const { updateContactHandler } = useContactsCrud();
 
   const update = (e) => {
     e.preventDefault();
-    if (newName === "" || newEmail === "" || newPhone === "") {
+    if (
+      contactForm.newName === "" ||
+      contactForm.newEmail === "" ||
+      contactForm.newPhone === ""
+    ) {
       alert("All the fields are mandatory!");
       return;
     }
     updateContactHandler({
       _id,
-      name: newName,
-      phone: newPhone,
-      email: newEmail,
+      name: contactForm.newName,
+      phone: contactForm.newPhone,
+      email: contactForm.newEmail,
     });
-    setNewName("");
-    setNewPhone("");
-    setNewEmail("");
+    setContactForm({
+      newName: "",
+      newEmail: "",
+      newPhone: "",
+    });
     navigate("/contactlist");
   };
   return (
@@ -38,8 +46,10 @@ const EditContact = () => {
             type="text"
             name="name"
             placeholder="name"
-            value={newName}
-            onChange={(e) => setNewName(e.target.value)}
+            value={contactForm.newName}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, newName: e.target.value })
+            }
           />
         </div>
         <div className="field">
@@ -48,8 +58,10 @@ const EditContact = () => {
             type="number"
             name="number"
             placeholder="phone Number"
-            value={newPhone}
-            onChange={(e) => setNewPhone(e.target.value)}
+            value={contactForm.newPhone}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, newPhone: e.target.value })
+            }
           />
         </div>
         <div className="field">
@@ -58,8 +70,10 @@ const EditContact = () => {
             type="text"
             name="email"
             placeholder="email"
-            value={newEmail}
-            onChange={(e) => setNewEmail(e.target.value)}
+            value={contactForm.newEmail}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, newEmail: e.target.value })
+            }
           />
         </div>
         <Link to={`/contactlist`}>

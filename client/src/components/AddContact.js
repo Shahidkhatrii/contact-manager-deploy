@@ -2,21 +2,34 @@ import React, { useState } from "react";
 import { useContactsCrud } from "../context/ContactsCrudContext";
 
 const AddContact = () => {
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [phone, setPhone] = useState("");
+  const [contactForm, setContactForm] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
   const { addContactHandler } = useContactsCrud();
 
   const add = (e) => {
     e.preventDefault();
-    if (name === "" || email === "" || phone === "") {
+    if (
+      contactForm.name === "" ||
+      contactForm.email === "" ||
+      contactForm.phone === ""
+    ) {
       alert("All the fields are mandatory!");
       return;
     }
-    addContactHandler({ name, phone, email });
-    setName("");
-    setEmail("");
-    setPhone("");
+    addContactHandler({
+      name: contactForm.name,
+      phone: contactForm.phone,
+      email: contactForm.email,
+    });
+    setContactForm({
+      name: "",
+      email: "",
+      phone: "",
+    });
   };
 
   return (
@@ -31,8 +44,10 @@ const AddContact = () => {
             name="name"
             placeholder="name"
             required
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            value={contactForm.name}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, name: e.target.value })
+            }
           />
         </div>
         <div className="field">
@@ -42,8 +57,10 @@ const AddContact = () => {
             name="number"
             placeholder="phone Number"
             required
-            value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            value={contactForm.phone}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, phone: e.target.value })
+            }
           />
         </div>
         <div className="field">
@@ -53,8 +70,10 @@ const AddContact = () => {
             name="email"
             placeholder="email"
             required
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={contactForm.email}
+            onChange={(e) =>
+              setContactForm({ ...contactForm, email: e.target.value })
+            }
           />
         </div>
         {/* <div className="field">

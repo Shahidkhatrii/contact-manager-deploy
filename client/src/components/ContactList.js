@@ -1,10 +1,8 @@
 import React, { useEffect } from "react";
 import ContactCard from "./ContactCard";
-
 import { Link, useNavigate } from "react-router-dom";
 import Modal from "./Modal";
 import { useContactsCrud } from "../context/ContactsCrudContext";
-
 import ContactListSkeleton from "./ContactListSkeleton";
 
 const ContactList = (props) => {

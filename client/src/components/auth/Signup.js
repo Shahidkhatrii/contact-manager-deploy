@@ -8,22 +8,21 @@ import { toast } from "react-hot-toast";
 const Signup = () => {
   const navigate = useNavigate();
 
-  const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const { registerUserHandler } = useContactsCrud();
 
   const submit = (e) => {
     e.preventDefault();
-    if (!name || !email || !password) {
+    if (!form.name || !form.email || !form.password) {
       toast.error("All fields are mandatory!");
       return;
     }
-    registerUserHandler({ username: name, email, password });
-    setName("");
-    setEmail("");
-    setPassword("");
+    registerUserHandler({
+      username: form.name,
+      email: form.email,
+      password: form.password,
+    });
+    setForm({ name: "", email: "", password: "" });
   };
 
   useEffect(() => {
@@ -39,9 +38,9 @@ const Signup = () => {
           iconPosition="left"
           placeholder="Username"
           className="auth-input-field"
-          value={name}
+          value={form.name}
           onChange={(e) => {
-            setName(e.target.value);
+            setForm({ ...form, name: e.target.value });
           }}
         />
         <Form.Input
@@ -50,9 +49,9 @@ const Signup = () => {
           iconPosition="left"
           placeholder="E-mail address"
           className="auth-input-field"
-          value={email}
+          value={form.email}
           onChange={(e) => {
-            setEmail(e.target.value);
+            setForm({ ...form, email: e.target.value });
           }}
         />
         <Form.Input
@@ -62,9 +61,9 @@ const Signup = () => {
           placeholder="Password"
           type="password"
           className="auth-input-field"
-          value={password}
+          value={form.password}
           onChange={(e) => {
-            setPassword(e.target.value);
+            setForm({ ...form, password: e.target.value });
           }}
         />
         <Button color="blue" fluid size="huge">

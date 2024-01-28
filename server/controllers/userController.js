@@ -16,6 +16,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Email is already taken");
   }
+
   const hashedPassword = await bcrypt.hash(password, 10);
   console.log("Hashed Password", hashedPassword);
   const user = await User.create({
