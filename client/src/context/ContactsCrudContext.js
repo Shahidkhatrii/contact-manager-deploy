@@ -17,8 +17,12 @@ export function ContactCrudContextProvider({ children }) {
     try {
       const response = await api.post("/api/users/register", data);
       if (response) {
-        navigate("/");
+        localStorage.setItem("token", response.data.accessToken);
+        navigate("/contactlist");
         toast.success("Registeration successful!");
+        setTimeout(() => {
+          toast.success(`Welcome, ${response.data.username}!`);
+        }, 2000);
       }
     } catch (error) {
       toast.error(error.response.data.message);
@@ -34,10 +38,10 @@ export function ContactCrudContextProvider({ children }) {
       }
       localStorage.setItem("token", response.data.accessToken);
       navigate("/contactlist");
+      toast.success("Login successful!");
       setTimeout(() => {
         toast.success(`Welcome, ${response.data.username}!`);
       }, 2000);
-      toast.success("Login successful!");
     } catch (error) {
       toast.error(error.response.data.message);
     }
